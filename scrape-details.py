@@ -22,6 +22,10 @@ def scrape_details(url):
         else:
             print(f"Date for {date_value} not found")
 
+    for date_value in date_values:
+        label_element = soup.find('s')
+        print (label_element)
+
     return(title)
 
 print(scrape_details('https://secdim.com/defensive-cloud-native-app/'))
