@@ -19,11 +19,27 @@ print("")
 # Find all label elements whose 'for' attribute starts with 'date'
 date_labels = soup.select('label[for^="date"]')
 
+print("Found Dates:")
+
+dates = []
 for label in date_labels:
-    print(f"Found date: {label.text}")
+    date = label.text.replace('\n', '')
+    dates.append(date)
+print(dates)
 
 booked_out_dates = soup.find_all('s')
 
+print("")
+print("Booked out dates:")
+
+out_dates = []
 for booked_out_date in booked_out_dates:
-    print(f"Booked out date: {booked_out_date.text}")
-    print("")
+    out_date = booked_out_date.text
+    out_dates.append(out_date)
+print(out_dates)
+
+print("")
+if date not in out_dates:
+    print(f"{date} appears to be available")
+else:
+    print(f"{date} is booked out")
