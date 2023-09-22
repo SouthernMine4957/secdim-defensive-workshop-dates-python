@@ -2,30 +2,28 @@ import requests
 import argparse
 from bs4 import BeautifulSoup
 
-def scrape_details(url):
-    # Send a GET request to the URL
-    response = requests.get(url)
+url = 'https://secdim.com/defensive-cloud-native-app/'
 
-    # Parse the HTML content using BeautifulSoup
-    soup = BeautifulSoup(response.content, 'html.parser')
+# Send a GET request to the URL
+response = requests.get(url)
 
-    # Find the title tag and extract its text
-    title = soup.find('title').get_text()
+# Parse the HTML content using BeautifulSoup
+soup = BeautifulSoup(response.content, 'html.parser')
 
-    # List of possible date values
-    date_values = ['date1', 'date2', 'date3', 'date4', 'date5']
+# Find the title tag and extract its text
+title = soup.find('title').get_text()
 
-    for date_value in date_values:
-        label_element = soup.find('label', {'for': date_value})
-        if label_element:
-            print(f"Found date: {label_element.text}")
-        else:
-            print(f"Date for {date_value} not found")
+print(f"Title: {title}")
+print("")
 
-    for date_value in date_values:
-        label_element = soup.find('s')
-        print (label_element)
+# Find all label elements whose 'for' attribute starts with 'date'
+date_labels = soup.select('label[for^="date"]')
 
-    return(title)
+for label in date_labels:
+    print(f"Found date: {label.text}")
 
-print(scrape_details('https://secdim.com/defensive-cloud-native-app/'))
+booked_out_dates = soup.find_all('s')
+
+for booked_out_date in booked_out_dates:
+    print(f"Booked out date: {booked_out_date.text}")
+    print("")
